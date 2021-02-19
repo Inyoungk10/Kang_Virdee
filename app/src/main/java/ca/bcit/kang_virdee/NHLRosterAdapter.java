@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NHLRosterAdapter extends ArrayAdapter<TeamRoster> {
+public class NHLRosterAdapter extends ArrayAdapter<NHLRoster> {
     Context _context;
 
-    public NHLRosterAdapter(Context context, ArrayList<TeamRoster> roster) {
+    public NHLRosterAdapter(Context context, ArrayList<NHLRoster> roster) {
         super(context, 0, roster);
         _context = context;
     }
@@ -22,17 +22,17 @@ public class NHLRosterAdapter extends ArrayAdapter<TeamRoster> {
     public View getView(int position, View convertView, ViewGroup parent) {
         final Activity activity = (Activity) _context;
         // Get the data item for this position
-        TeamRoster TRoster = getItem(position);
+        NHLRoster roster = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.screen_two_layout, parent, false);
         }
 
         // Lookup view for data population
-        TextView roster = convertView.findViewById(R.id.roster);
+        TextView rosterTextView = convertView.findViewById(R.id.roster);
 
         // Populate the data into the template view using the data object
-        roster.setText(TRoster.getName());
+        rosterTextView.setText(roster.getPerson().getFullName());
 
         // Return the completed view to render on screen
         return convertView;

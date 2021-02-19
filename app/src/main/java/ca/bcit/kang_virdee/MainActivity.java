@@ -27,15 +27,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         nhlTeams = new ArrayList<>();
         lv = findViewById(R.id.nhlTeams);
-        new GetContacts().execute();
-
         lv.setOnItemClickListener((adapterView, view, position, id) -> {
-
-        Intent i = new Intent(MainActivity.this, RosterActivity.class);
-        adapterView.getItemAtPosition((int)id);
-        i.putExtra("id", id);
-        startActivity(i);
+            Intent i = new Intent(MainActivity.this, RosterActivity.class);
+            adapterView.getItemAtPosition((int)id);
+            i.putExtra("id", (int)id);
+            startActivity(i);
         });
+        new GetContacts().execute();
     }
 
     /**

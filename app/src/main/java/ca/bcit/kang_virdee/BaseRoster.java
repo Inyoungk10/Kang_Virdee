@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class BaseRoster {
-    @SerializedName("person")
+    @SerializedName("roster")
     @Expose
-    private ArrayList<TeamRoster> roster = new ArrayList<>();
-    public  ArrayList<TeamRoster> getRoster(){return roster;}
-    public void setRoster(ArrayList<TeamRoster> roster) {this.roster = roster;}
+    private ArrayList<NHLRoster> roster = new ArrayList<>();
+    public  ArrayList<NHLRoster> getRoster(){return roster;}
+    public void setRoster(ArrayList<NHLRoster> roster) {this.roster = roster;}
 }

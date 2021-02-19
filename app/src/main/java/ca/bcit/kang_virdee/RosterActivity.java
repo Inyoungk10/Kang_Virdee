@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class RosterActivity extends AppCompatActivity {
 
     private static String SERVICE_URL = "https://statsapi.web.nhl.com/api/v1/teams/";
-    private ArrayList<TeamRoster> teamRoster;
+    private ArrayList<NHLRoster> teamRoster;
     private ListView lv;
     private final String TAG = RosterActivity.class.getSimpleName();
     private String BASE_URL;
@@ -24,14 +24,16 @@ public class RosterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        BASE_URL = SERVICE_URL + getIntent().getExtras().get("id") + "/roster";
+        String id = "" + getIntent().getExtras().get("id");
+        int idNum = Integer.parseInt(id) + 1;
+        Log.e("IDkek", ""+ idNum);
+        BASE_URL = SERVICE_URL + idNum + "/roster";
+        Log.e("BASE_URL", ""+ BASE_URL);
 
         setContentView(R.layout.activity_roster);
         teamRoster = new ArrayList<>();
-        lv = findViewById(R.id.nhlRoster);
+        lv = findViewById(R.id.fullName);
         new RosterActivity.GetContacts().execute();
-
     }
 
     /**
@@ -56,8 +58,8 @@ public class RosterActivity extends AppCompatActivity {
             if (jsonStr != null) {
                 Log.d(TAG, "Json: " + jsonStr);
                 // this step is needed to wrap the JSON array inside
-                // a JSON object that looks like this { "teams": . . . . }
-                //jsonStr = "{\"teams\":" + jsonStr + "}";
+                // a JSON object that looks like this { "roster": . . . . }
+                //jsonStr = "{\"roster\":" + jsonStr + "}";
                 Gson gson = new Gson();
                 BaseRoster baseRoster = gson.fromJson(jsonStr, BaseRoster.class);
                 teamRoster = baseRoster.getRoster();
@@ -81,7 +83,6 @@ public class RosterActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             NHLRosterAdapter adapter = new NHLRosterAdapter(RosterActivity.this, teamRoster);
-
 
             // Attach the adapter to a ListView
             lv.setAdapter(adapter);
