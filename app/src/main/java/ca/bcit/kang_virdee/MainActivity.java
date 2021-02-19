@@ -2,6 +2,7 @@ package ca.bcit.kang_virdee;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
         nhlTeams = new ArrayList<>();
         lv = findViewById(R.id.nhlTeams);
         new GetContacts().execute();
+
+        lv.setOnItemClickListener((adapterView, view, position, id) -> {
+
+        Intent i = new Intent(MainActivity.this, RosterActivity.class);
+        adapterView.getItemAtPosition((int)id);
+        i.putExtra("id", id);
+        startActivity(i);
+        });
     }
 
     /**

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class NHLRosterAdapter extends ArrayAdapter<TeamRoster> {
     Context _context;
 
-    public NHLRosterAdapter(Context context, ArrayList<TeamRoster> teamRoster) {
-        super(context, 0, teamRoster);
+    public NHLRosterAdapter(Context context, ArrayList<TeamRoster> roster) {
+        super(context, 0, roster);
         _context = context;
     }
 
