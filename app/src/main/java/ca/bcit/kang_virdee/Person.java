@@ -15,4 +15,14 @@ public class Person {
     public void setfullName(String fullName) {
         this.fullName = fullName;
     }
+
+    @SerializedName("id")
+    @Expose
+    private int id;
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 }

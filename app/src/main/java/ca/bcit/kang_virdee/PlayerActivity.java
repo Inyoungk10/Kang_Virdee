@@ -1,6 +1,5 @@
 package ca.bcit.kang_virdee;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +12,10 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class RosterActivity extends AppCompatActivity {
+public class PlayerActivity extends AppCompatActivity {
 
-    private static String SERVICE_URL = "https://statsapi.web.nhl.com/api/v1/teams/";
-    private ArrayList<NHLRoster> teamRoster;
+    private static String SERVICE_URL = "https://statsapi.web.nhl.com/api/v1/people/";
+    private ArrayList<NHLPlayer> playerData;
     private ListView lv;
     private final String TAG = PlayerActivity.class.getSimpleName();
     private String BASE_URL;
@@ -24,21 +23,13 @@ public class RosterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_roster);
-        teamRoster = new ArrayList<>();
+        setContentView(R.layout.activity_player);
+        playerData = new ArrayList<>();
 
-        String id = "" + getIntent().getExtras().get("id");
-        int idNum = Integer.parseInt(id) + 1;
-        BASE_URL = SERVICE_URL + idNum + "/roster";
-
-        lv = findViewById(R.id.roster);
-        lv.setOnItemClickListener((adapterView, view, position, idPlayer) -> {
-            int idP = teamRoster.get(position).getPerson().getId();
-            Intent i = new Intent(RosterActivity.this, PlayerActivity.class);
-            i.putExtra("idPlayer", idP);
-            startActivity(i);
-        });
-        new RosterActivity.GetContacts().execute();
+        String id = "" + getIntent().getExtras().get("idPlayer");
+        BASE_URL = SERVICE_URL + id;
+        lv = findViewById(R.id.players);
+        new PlayerActivity.GetContacts().execute();
     }
 
     /**
@@ -54,6 +45,7 @@ public class RosterActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
             String jsonStr;
+
             // Making a request to url and getting response
             jsonStr = sh.makeServiceCall(BASE_URL);
 
@@ -65,8 +57,8 @@ public class RosterActivity extends AppCompatActivity {
                 // a JSON object that looks like this { "roster": . . . . }
                 //jsonStr = "{\"roster\":" + jsonStr + "}";
                 Gson gson = new Gson();
-                BaseRoster baseRoster = gson.fromJson(jsonStr, BaseRoster.class);
-                teamRoster = baseRoster.getRoster();
+                BasePlayer basePlayer = gson.fromJson(jsonStr, BasePlayer.class);
+                playerData = basePlayer.getPlayerData();
             } else {
                 Log.e(TAG, "Couldn't get json from server.");
                 runOnUiThread(new Runnable() {
@@ -86,7 +78,7 @@ public class RosterActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            NHLRosterAdapter adapter = new NHLRosterAdapter(RosterActivity.this, teamRoster);
+            NHLPlayerAdapter adapter = new NHLPlayerAdapter(PlayerActivity.this, playerData);
 
             // Attach the adapter to a ListView
             lv.setAdapter(adapter);
