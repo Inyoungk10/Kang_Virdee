@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Inyoung, Sirinam - Set 3D</string>
     <string name="rosterName">Roster</string>
+    <string name="name_Label">Name</string>
+    <string name="team_Label">Team</string>
+    <string name="age_Label">Age</string>
+    <string name="nation_Label">Nationality</string>
+    <string name="position_Label">Position</string>
+
 </resources>

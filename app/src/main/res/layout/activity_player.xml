@@ -8,5 +8,6 @@
     <ListView
         android:id="@+id/players"
         android:layout_width="fill_parent"
+        android:background="@color/black"
         android:layout_height="wrap_content" />
 </LinearLayout>
